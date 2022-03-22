@@ -22,16 +22,74 @@ body {
 
 .row {
     display: flex;
-    border: 1px solid black;
-    background: #dddddd;
+    /*border: 1px solid black;*/
+    /*background: #eeeeee;*/
     width: 310px;
 }
 
 .letter {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    text-align: center;
+    font-size: 50px;
+    text-transform: uppercase;
+    font-weight: bold;
     background: white;
     width: 60px;
     height: 70px;
     border: 2px solid #d4d4d4;
     border-radius: 2px;
     margin: 2px;
+}
+
+.keyboard {
+    margin: 50pt;
+}
+
+.keyboardRow {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    /*border: 1px solid black;*/
+    /*background: #dddddd;*/
+}
+
+.key {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    text-align: center;
+    font-size: 20px;
+    text-transform: uppercase;
+    background: white;
+    width: 40px;
+    height: 50px;
+    border: 2px solid #d4d4d4;
+    border-radius: 2px;
+    margin: 2px;
+}
+
+.functionalKey {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    text-transform: uppercase;
+    background: white;
+    width: 80px;
+    height: 50px;
+    border: 2px solid #d4d4d4;
+    border-radius: 2px;
+    margin: 2px;
+}
+
+.functionalKey:hover, .key:hover {
+    cursor: pointer;
+    background: #dddddd;
 }
