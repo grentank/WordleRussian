@@ -81,20 +81,20 @@ enterKey.addEventListener('click', () => {
 })
 
 function wordCheck() {
-    let guessColoredLetters = [0,0,0,0,0];
-    let hiddenColoredLetters = [0,0,0,0,0];
+    let guessColoredLetters = [0,0,0,0,0]; // was letter colore ? 1 : 0
+    let hiddenColoredLetters = [0,0,0,0,0]; // the same, but for a hidden letter. Was there a green match?
     let coloredFlag = 0;
-    for(let i=0; i<5; i++) {
+    for(let i=0; i<5; i++) { // At first color each letter either in green or gray
         if (hiddenWord[i] === guessedWord[i]) {
             displayedLetters[getLetterIndex() - 5 + i].style = 'background: #6AAA64; color: white; border-color: #6AAA64';
             document.getElementById(guessedWord[i]).style.backgroundColor = '#6AAA64';
-            guessColoredLetters[i] = 1;
+            guessColoredLetters[i] = 1; // Mark colored letters
             hiddenColoredLetters[i] = 1;
         }
         if (hiddenWord.includes(guessedWord[i]) === false) {
             displayedLetters[getLetterIndex() - 5 + i].style = 'background: #787C7E; color: white; border-color: #787C7E';
             document.getElementById(guessedWord[i]).style.backgroundColor = '#787C7E';
-            guessColoredLetters[i] = -1;
+            guessColoredLetters[i] = -1; // mark colored letters
         }
     }
     // Now let's decide whether the displayed color should be yellow or gray
@@ -115,18 +115,18 @@ function wordCheck() {
                 break;
             }
         }
-        if (coloredFlag === 0) {
+        if (coloredFlag === 0) { // if a letter could not be colored yellow, color it gray
             displayedLetters[getLetterIndex() - 5 + i].style = 'background: #787C7E; color: white; border-color: #787C7E'; // Don't change the color of keys because they have been changed previously
         }
 
     }
-    if (guessedWord === hiddenWord) {
+    if (guessedWord === hiddenWord) { // if a word was guessed, display the congratulations message
         for (let button of keyboardKeys) button.removeEventListener('click', screenKeyboardListener);
         document.removeEventListener('keydown',physicalKeyboardListener);
         document.getElementById('endgame').innerHTML = 'Поздравляю! Вы выиграли! <br> Обновите страницу (F5), чтобы сыграть ещё <br> <br> <br> Congratulations! You win! <br> Reload this page (F5) to play again';
         let ending = setTimeout(showEndgame, 1000);
     }
-    else if (currentTry === 5) {
+    else if (currentTry === 5) { // after the last try with the game is over
         for (let button of keyboardKeys) button.removeEventListener('click', screenKeyboardListener);
         document.removeEventListener('keydown',physicalKeyboardListener);
         document.getElementById('endgame').innerHTML = `Вы проиграли! Загаданное слово было ${hiddenWord} <br> Обновите страницу (F5), чтобы сыграть ещё <br> <br> <br> You lost! <br> Reload this page (F5) to play again`;
@@ -134,7 +134,8 @@ function wordCheck() {
     }
 }
 
-function showEndgame() {
+// a function to animate window fade in
+function showEndgame() { 
     const message = document.getElementById('endgame');
     message.style.visibility = 'visible';
     let i = 0;
