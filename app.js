@@ -1,41 +1,24 @@
-/*
-document.getElementById('randomWord').addEventListener('click', () => {
-    let randomIndex = Math.floor(Math.random()*(wordsDataLength-1));
-    document.getElementById('textbox').innerHTML = wordsData[randomIndex];
-})
-
-document.getElementById('findWords').addEventListener('click', () => {
-    for (let word of wordsData) {
-        if (!word.includes("я") && !word.includes("р") && !word.includes("п") && !word.includes("т") && !word.includes("с") && !word.includes("и") && !word.includes("а") && word[1] === "о" && !word.includes("н") && !word.includes("в") && !word.includes("м") && !word.includes("к") && !word.includes("й") && !word.includes("г") && !word.includes("з") && !word.includes("ы") && !word.includes("л"))
-            document.getElementById('textbox').innerHTML += word + "\n";
-    }
-})
-*/
-
 const keyboardKeys = document.querySelectorAll('.key'),
     displayedLetters = document.querySelectorAll('.letter'),
     backspaceKey = document.getElementById('backspace'),
     enterKey = document.getElementById('enter');
-let currentTry = 0;
-let currentLetterPosition = 0;
-let getLetterIndex = () => currentLetterPosition+5*currentTry;
-let hiddenWord = goodWords[Math.floor(Math.random()*(goodWordsLength-1))];
-let guessedWord = '';
+let currentTry = 0; // keeps track of incorrect tries
+let currentLetterPosition = 0; // keeps track of the last div with a letter in a row
+let getLetterIndex = () => currentLetterPosition+5*currentTry; // function to calculate div with the last letter
+let hiddenWord = goodWords[Math.floor(Math.random()*(goodWordsLength-1))]; // choose a good hidden word
+let guessedWord = ''; // will be used later
 
 
 
 // Making a listener for a screen keyboard press
-function screenKeyboardListener(pressedKey) {
+for (let button of keyboardKeys) button.addEventListener('click', (pressedKey) => {
     // Don't print another letter if there are already 5 letters printed
     if (currentLetterPosition <= 4) {
         displayedLetters[getLetterIndex()].innerHTML = pressedKey.target.innerHTML;
         currentLetterPosition++; // Tracking the current position of input 'cursor'
     }
-}
+})
 
-for (let button of keyboardKeys) {
-    button.addEventListener('click', screenKeyboardListener);
-}
 
 // Making a listener for a physical keyboard
 function physicalKeyboardListener(pressedKey) {
@@ -50,9 +33,10 @@ function physicalKeyboardListener(pressedKey) {
     }
     else if (currentLetterPosition === 5 && pressedKey.code === 'Enter') enterKeyHandler();
 }
-
+// could have used an arrow notation here
 document.addEventListener('keydown', physicalKeyboardListener);
 
+// Adding a listener to backspace button
 backspaceKey.addEventListener('click', () => {
     if (currentLetterPosition > 0) {
         currentLetterPosition--;
