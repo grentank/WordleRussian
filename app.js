@@ -4,14 +4,15 @@ const screenKeyboardKeys = document.querySelectorAll('.key'),
     enterKey = document.getElementById('enter');
 let currentTry = 0; // keeps track of incorrect tries
 let currentLetterPosition = 0; // keeps track of the last div with a letter in a row
-let getLetterIndex = () => currentLetterPosition+5*currentTry; // function to calculate div with the last letter
-let hiddenWord = goodWords[Math.floor(Math.random()*(goodWordsLength-1))]; // choose a good hidden word
+const getLetterIndex = () => currentLetterPosition+5*currentTry; // function to calculate div with the last letter
+const hiddenWord = goodWords[Math.floor(Math.random()*(goodWordsLength-1))]; // choose a good hidden word
 let guessedWord = ''; // will be used later
 
 
 
 if(localStorage.getItem('totalWins') === null) localStorage.setItem('totalWins', '0')
 if(localStorage.getItem('totalLosses') === null) localStorage.setItem('totalLosses', '0')
+if(localStorage.getItem('winStats') === null) localStorage.setItem('winStats', '0,0,0,0,0,0')
 
 
 
@@ -121,14 +122,21 @@ function wordCheck() {
         for (let button of screenKeyboardKeys) button.removeEventListener('click', screenKeyboardListener);
         document.removeEventListener('keydown',physicalKeyboardListener);
         document.getElementById('endgame').innerHTML = 'Поздравляю! Вы выиграли! <br> Обновите страницу (F5), чтобы сыграть ещё'; /* <br> <br> <br> Congratulations! You win! <br> Reload this page (F5) to play again*/
+
         localStorage.setItem('totalWins', (parseInt(localStorage.getItem('totalWins'))+1).toString())
+        let winStats = localStorage.getItem('winStats').split(',').map(element => parseInt(element));
+        winStats[currentTry]++;
+        localStorage.setItem('winStats', winStats.toString())
+
         setTimeout(showEndgame, 1000);
     }
     else if (currentTry === 5) { // after the last try with the game is over
         for (let button of screenKeyboardKeys) button.removeEventListener('click', screenKeyboardListener);
         document.removeEventListener('keydown',physicalKeyboardListener);
         document.getElementById('endgame').innerHTML = `Вы проиграли! Загаданное слово было ${hiddenWord} <br> Обновите страницу (F5), чтобы сыграть ещё`; /*<br> <br> <br> You lost! <br> Reload this page (F5) to play again*/
+
         localStorage.setItem('totalLosses', (parseInt(localStorage.getItem('totalLosses'))+1).toString())
+
         setTimeout(showEndgame, 1000);
     }
 }
@@ -140,13 +148,17 @@ function showEndgame() {
     const totalWins = parseInt(localStorage.getItem('totalWins'));
     const totalLosses = parseInt(localStorage.getItem('totalLosses'));
     const winRate = totalWins**2 + totalLosses**2 === 0 ? 0 : Math.round(100*totalWins/(totalWins+totalLosses));
-    document.getElementById('statistics').innerHTML = `Всего выигрышей: ${totalWins} <br>
-        Всего проигрышей: ${totalLosses} <br>
+    document.getElementById('statistics').innerHTML = `Побед: ${totalWins} &nbsp;&nbsp;
+        Поражений: ${totalLosses} &nbsp;&nbsp;
         Процент побед: ${winRate}%`;
+    const winBars = localStorage.getItem('winStats').split(',').map(element => parseInt(element));
+    document.querySelectorAll('.statBar').forEach((divElement,index) => {
+        divElement.style.width = (winBars[index]*450/Math.max(...winBars) + 20).toString() + 'px'
+    })
+
     // message.style.visibility = 'visible';
     // for (let i=0; i<1; i+=.01) setTimeout(() => message.style.opacity = i, 300*i);
 }
-
 
 document.getElementById('closeEndgame').addEventListener('click', () => document.getElementById('endContent').style.opacity = '0')
 
@@ -155,3 +167,6 @@ document.getElementById('statsButton').addEventListener('click', showEndgame)
 
 // document.getElementById('endgame').innerHTML = `Вы проиграли! Загаданное слово было ${hiddenWord} <br> Обновите страницу (F5), чтобы сыграть ещё`;
 // setTimeout(showEndgame,2000)
+//
+// localStorage.setItem('winStats',[0,3,6,9,10,7].toString())
+// localStorage.setItem('totalWins',[0,3,6,9,10,7].reduce((a,e) => a+e,0).toString())

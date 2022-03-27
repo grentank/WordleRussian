@@ -192,3 +192,24 @@ body {
     padding: 20px;
     transition: all 1s ease-in-out;
 }
+
+
+.statRow {
+    display: flex;
+    align-content: center;
+}
+
+.statNum {
+    margin-left: 20px;
+    padding-top: 3px;
+    /*margin-top: 3px;*/
+    width: 20px;
+    height: 30px;
+}
+
+.statBar {
+    margin: 5px;
+    width: 20px;
+    height: 15px;
+    background-color: #6AAA64;
+}
