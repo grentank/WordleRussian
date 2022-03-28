@@ -9,6 +9,10 @@ const hiddenWord = goodWords[Math.floor(Math.random()*(goodWordsLength-1))]; // 
 let guessedWord = ''; // will be used later
 
 
+if(localStorage.getItem('needsReset') === null || localStorage.getItem('needsReset') === 'true') {
+    localStorage.clear();
+    localStorage.setItem('needsReset', 'false')
+}
 
 if(localStorage.getItem('totalWins') === null) localStorage.setItem('totalWins', '0')
 if(localStorage.getItem('totalLosses') === null) localStorage.setItem('totalLosses', '0')
