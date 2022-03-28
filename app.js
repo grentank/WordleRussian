@@ -9,6 +9,7 @@ const hiddenWord = goodWords[Math.floor(Math.random()*(goodWordsLength-1))]; // 
 let guessedWord = ''; // will be used later
 
 
+
 if(localStorage.getItem('needsReset') === null || localStorage.getItem('needsReset') === 'true') {
     localStorage.clear();
     localStorage.setItem('needsReset', 'false')
@@ -17,7 +18,6 @@ if(localStorage.getItem('needsReset') === null || localStorage.getItem('needsRes
 if(localStorage.getItem('totalWins') === null) localStorage.setItem('totalWins', '0')
 if(localStorage.getItem('totalLosses') === null) localStorage.setItem('totalLosses', '0')
 if(localStorage.getItem('winStats') === null) localStorage.setItem('winStats', '0,0,0,0,0,0')
-
 
 
 // Adding a listener to screen keyboard (needed for correct deleting process after game over)
@@ -157,7 +157,8 @@ function showEndgame() {
         Процент побед: ${winRate}%`;
     const winBars = localStorage.getItem('winStats').split(',').map(element => parseInt(element));
     document.querySelectorAll('.statBar').forEach((divElement,index) => {
-        divElement.style.width = (winBars[index]*450/Math.max(...winBars) + 20).toString() + 'px'
+        divElement.style.width = (winBars[index]*300/Math.max(...winBars) + 30).toString() + 'px';
+        divElement.innerHTML = winBars[index].toString();
     })
 
     // message.style.visibility = 'visible';
@@ -172,5 +173,5 @@ document.getElementById('statsButton').addEventListener('click', showEndgame)
 // document.getElementById('endgame').innerHTML = `Вы проиграли! Загаданное слово было ${hiddenWord} <br> Обновите страницу (F5), чтобы сыграть ещё`;
 // setTimeout(showEndgame,2000)
 //
-// localStorage.setItem('winStats',[0,3,6,9,10,7].toString())
+// localStorage.setItem('winStats',[11,3,6,9,10,7].toString())
 // localStorage.setItem('totalWins',[0,3,6,9,10,7].reduce((a,e) => a+e,0).toString())
