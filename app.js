@@ -127,6 +127,7 @@ function wordCheck() {
         document.removeEventListener('keydown',physicalKeyboardListener);
         document.getElementById('endgame').innerHTML = 'Поздравляю! Вы выиграли! <br> Обновите страницу (F5), чтобы сыграть ещё'; /* <br> <br> <br> Congratulations! You win! <br> Reload this page (F5) to play again*/
 
+        document.querySelectorAll('.statBar')[currentTry].style.backgroundColor = '#6AAA64'
         localStorage.setItem('totalWins', (parseInt(localStorage.getItem('totalWins'))+1).toString())
         let winStats = localStorage.getItem('winStats').split(',').map(element => parseInt(element));
         winStats[currentTry]++;
