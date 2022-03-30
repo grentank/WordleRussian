@@ -162,17 +162,9 @@ function showEndgame() {
         divElement.innerHTML = winBars[index].toString();
     })
 
-    // message.style.visibility = 'visible';
-    // for (let i=0; i<1; i+=.01) setTimeout(() => message.style.opacity = i, 300*i);
 }
 
 document.getElementById('closeEndgame').addEventListener('click', () => document.getElementById('endContent').style.opacity = '0')
 
 document.getElementById('statsButton').addEventListener('click', showEndgame)
 
-
-// document.getElementById('endgame').innerHTML = `Вы проиграли! Загаданное слово было ${hiddenWord} <br> Обновите страницу (F5), чтобы сыграть ещё`;
-// setTimeout(showEndgame,2000)
-//
-// localStorage.setItem('winStats',[11,3,6,9,10,7].toString())
-// localStorage.setItem('totalWins',[0,3,6,9,10,7].reduce((a,e) => a+e,0).toString())
